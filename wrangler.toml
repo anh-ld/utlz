@@ -1,0 +1,8 @@
+name = "ushort"
+main = "src/index.ts"
+compatibility_date = "2022-11-29"
+kv_namespaces = [
+  { binding = "store", preview_id = "96af902a6f6542559bade0d085c44a97", id = "96af902a6f6542559bade0d085c44a97" },
+  { binding = "store_reverse", preview_id = "fe28d51c9c9f448eac7413db5784e5be", id = "fe28d51c9c9f448eac7413db5784e5be" }
+]
+node_compat=true
