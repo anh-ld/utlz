@@ -1,8 +1,19 @@
-name = "ushort"
-main = "src/index.ts"
+name = "utlz"
+main = "worker.js"
 compatibility_date = "2022-11-29"
 kv_namespaces = [
-  { binding = "store", preview_id = "96af902a6f6542559bade0d085c44a97", id = "96af902a6f6542559bade0d085c44a97" },
-  { binding = "store_reverse", preview_id = "fe28d51c9c9f448eac7413db5784e5be", id = "fe28d51c9c9f448eac7413db5784e5be" }
+  { binding = "URL_HASH", preview_id = "8a6ed91b940d4ed7882742de41b3e08f", id = "8a6ed91b940d4ed7882742de41b3e08f" },
+  { binding = "HASH_URL", preview_id = "a5f2607bf7db4702b2ab1b411131a36e", id = "a5f2607bf7db4702b2ab1b411131a36e" }
 ]
 node_compat=true
+
+[[r2_buckets]]
+binding = 'IMAGE_BUCKET'
+bucket_name = 'utlz'
+preview_bucket_name = 'utlz'
+
+[triggers]
+crons = ["*/30 * * * *"]
+
+[site]
+bucket = "./dist"

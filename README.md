@@ -1,4 +1,4 @@
-### URL Shortener API using Cloudflare Worker and KV
+### URL Shortener and Image Uploader using Cloudflare Worker, KV and R2
 
 - `POST` `/u`
 
@@ -13,16 +13,26 @@
   - Success Response `200` `<hash>`
   - Error Response `400`
 
-- `GET` `/:hash`
+- `POST` `/i`
+
+  - FormData
+
+  ```
+  {
+    file: File
+  }
+  ```
+
+  - Success Response `200` `<hash>`
+  - Error Response `400`
+
+- `GET` `/u/:hash` , `/i/:hash`
 
   - Success Response `302`
   - Error Response `404`
 
-- `GET` `/health`
-
-### Example
-
-- [https://ushort.sfns.workers.dev/Y1w](https://ushort.sfns.workers.dev/Y1w)
+- `GET` `/`
+  - Static HTML (a built SolidJS app)
 
 ### Note
 
