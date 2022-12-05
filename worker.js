@@ -25,14 +25,24 @@ app.get('/i/:imageId', async c => {
 });
 app.get('/u/:urlId', async c => {
   const { urlId } = c.req.param();
-  let url = await c.env.HASH_URL.get(urlId);
+  let record;
 
-  if (!url) {
+  try {
+    record = await c.env.DB.prepare(
+      'SELECT raw_url from ShortenedURL WHERE hashed_value = ?',
+    )
+      .bind(urlId)
+      .first();
+  } catch (e) {
+    record = null;
+  }
+
+  if (!record?.raw_url) {
     c.status(404);
     return c.body('Not Found');
   }
 
-  return c.redirect(url);
+  return c.redirect(record.raw_url);
 });
 app.post('/u', async c => {
   const { url } = await c.req.json();
@@ -42,12 +52,27 @@ app.post('/u', async c => {
     return c.body('Error');
   }
 
-  let hash = await c.env.URL_HASH.get(url);
+  let record;
+
+  try {
+    record = await c.env.DB.prepare(
+      'SELECT hashed_value from ShortenedURL WHERE raw_url = ?',
+    )
+      .bind(url)
+      .first();
+  } catch (e) {
+    record = null;
+  }
+
+  let hash = record?.hashed_value;
 
   if (!hash) {
     hash = nanoid(6);
-    await c.env.URL_HASH.put(url, hash);
-    await c.env.HASH_URL.put(hash, url);
+    await c.env.DB.prepare(
+      'INSERT INTO ShortenedURL (hashed_value, raw_url) VALUES (?1, ?2)',
+    )
+      .bind(hash, url)
+      .run();
   }
 
   return c.body(hash);
@@ -70,16 +95,16 @@ app.post('/i', async c => {
 
 export default {
   fetch(request, env, ctx) {
-    return app.fetch(request, env, ctx)
+    return app.fetch(request, env, ctx);
   },
   async scheduled(controller, env, ctx) {
     const images = await env.IMAGE_BUCKET.list();
     const keys = images.objects.map(image => image.key);
     const promises = keys.map(async key => {
       await env.IMAGE_BUCKET.delete(key);
-    })
+    });
 
     await Promise.all(promises);
     console.log('Cron processed');
-	},
-}
+  },
+};

@@ -1,11 +1,12 @@
 name = "utlz"
 main = "worker.js"
 compatibility_date = "2022-11-29"
-kv_namespaces = [
-  { binding = "URL_HASH", preview_id = "8a6ed91b940d4ed7882742de41b3e08f", id = "8a6ed91b940d4ed7882742de41b3e08f" },
-  { binding = "HASH_URL", preview_id = "a5f2607bf7db4702b2ab1b411131a36e", id = "a5f2607bf7db4702b2ab1b411131a36e" }
-]
 node_compat=true
+
+[[ d1_databases ]]
+binding = "DB"
+database_name = "utlz"
+database_id = "3a5c572f-3da6-4d5b-b2d7-9b9acde5c628"
 
 [[r2_buckets]]
 binding = 'IMAGE_BUCKET'

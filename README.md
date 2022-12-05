@@ -1,4 +1,6 @@
-### URL Shortener and Image Uploader using Cloudflare Worker, KV and R2
+### Example using Cloudflare Worker, D1 and R2
+
+#### URL Shortener and Image Uploader API
 
 - `POST` `/u`
 
@@ -40,3 +42,4 @@
 - Query and mutate KV data from Worker is kinda slow. It might be miserable if thousands of mutations are processing
   concurrently.
 - Durable Object is a better alternative for KV but it needs paid.
+- `Update #1`: Drop KV, use D1 instead.

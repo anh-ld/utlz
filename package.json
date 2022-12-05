@@ -16,7 +16,7 @@
   "private": true,
   "scripts": {
     "start:client": "vite",
-    "start:worker": "wrangler dev",
+    "start:worker": "wrangler dev --local --persist",
     "build:client": "vite build",
     "deploy": "wrangler publish",
     "format": "npx prettier --write ."
